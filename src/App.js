@@ -10,7 +10,7 @@ function Square({ value, onSquareClick }) {
 
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
-    if (squares[i] || calculateWinner(squares)) {
+    if (calculateWinner(squares) || squares[i]) {
       return;
     }
     const nextSquares = squares.slice();
@@ -60,7 +60,7 @@ export default function Game() {
 
   function handlePlay(nextSquares) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory([nextHistory]);
+    setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
 
@@ -73,7 +73,7 @@ export default function Game() {
     if (move > 0) {
       description = "Go to move #" + move;
     } else {
-      description = "Go to gamestart";
+      description = "Go to game start";
     }
     return (
       <li key={move}>
@@ -81,6 +81,7 @@ export default function Game() {
       </li>
     );
   });
+
   return (
     <div className="game">
       <div className="game-board">
